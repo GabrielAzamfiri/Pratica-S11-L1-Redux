@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { HeartFill, Trash } from "react-bootstrap-icons";
+import { HeartFill } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Job = ({ data, index }) => {
+const Job = ({ data }) => {
   const [favorite, setFavorite] = useState(false);
 
   // questa variabile la potremo chiamare per attivare il processo di SCRITTURA nello Store
