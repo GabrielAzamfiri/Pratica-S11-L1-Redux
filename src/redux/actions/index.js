@@ -1,8 +1,10 @@
-import { useDispatch } from "react-redux";
-
 export const ADD_TO_FAVORITE = "ADD_TO_FAVORITE";
 export const REMOVE_FROM_FAVORITE = "REMOVE_FROM_FAVORITE";
 export const SEARCHED_JOBS = "SEARCHED_JOBS";
+export const GET_JOBS_LOADING_ON = "GET_JOBS_LOADING_ON";
+export const GET_JOBS_LOADING_OFF = "GET_JOBS_LOADING_OFF";
+export const GET_JOBS_ERROR_ON = "GET_JOBS_ERROR_ON";
+export const GET_JOBS_ERROR_OFF = "GET_JOBS_ERROR_OFF";
 
 export const addToFavoriteAction = data => ({ type: ADD_TO_FAVORITE, payload: data });
 export const removeFromFavoriteAction = index => ({ type: REMOVE_FROM_FAVORITE, payload: index });
@@ -15,7 +17,7 @@ export const getJobsAction = query => {
     // per essere sincronizzati col momento effettivo in cui siamo pronti ad inviarla, dopo l'arrivo dei dati da una fetch che è asincrona
     console.log("GET STATE", getState()); // ritorna l'intero oggetto di stato globale
 
-    //   dispatch({ type: GET_JOBS_LOADING_ON });
+    dispatch({ type: GET_JOBS_LOADING_ON });
     const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
     try {
       const response = await fetch(baseEndpoint + query + "&limit=20");
@@ -26,15 +28,15 @@ export const getJobsAction = query => {
 
         // questa dispatch interna comunica a quella esterna che è il momento di riprendere il flusso redux e di far arrivare l'action al reducer
         dispatch({ type: SEARCHED_JOBS, payload: fetchedJobs.data });
-        // dispatch({ type: GET_BOOKS_ERROR_OFF });
+        dispatch({ type: GET_JOBS_ERROR_OFF });
       } else {
         throw new Error("Errore nel erperimento dei dati 😥");
       }
     } catch (error) {
       console.log(error);
-      //   dispatch({ type: GET_BOOKS_ERROR_ON, payload: error.message });
+      dispatch({ type: GET_JOBS_ERROR_ON, payload: error.message });
     } finally {
-      //   dispatch({ type: GET_BOOKS_LOADING_OFF });
+      dispatch({ type: GET_JOBS_LOADING_OFF });
     }
   };
 };
