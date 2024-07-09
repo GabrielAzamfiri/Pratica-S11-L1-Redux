@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigate } from "react-router-dom";
 import { House, Trash } from "react-bootstrap-icons";
+import {  removeFromFavoriteAction } from "../redux/actions";
 
 const MyFavorite = () => {
   const dispatch = useDispatch();
   //  // useSelector ci chiede una funzione per selezionare una porzione di stato, quello che ritorna la funzione sarà il dato trovato in quel valore di stato,
   // // che verrà prelevato e assegnato alla variabile associata
-  const favorite = useSelector(state => state.favorite.content);
+  const favorite = useSelector(state => state.addRemoveFavorite.content);
   const navigate = useNavigate();
   return (
     <Container>
@@ -33,23 +34,15 @@ const MyFavorite = () => {
               </a>
             </Col>
             <Col xs={1}>
-              
-                <Trash
-                  onClick={() => {
-                   
-                      dispatch({
-                        type: "REMOVE_FROM_FAVORITE",
-                        payload: index,
-                      });
-                  }}
-                  fill="red"
-                />
-               
-              
-            
+              <Trash
+                onClick={() => {
+                  dispatch(removeFromFavoriteAction(index));
+                }}
+                fill="red"
+              />
             </Col>
           </Row>
-        )
+        );
       })}
     </Container>
   );

@@ -2,6 +2,8 @@
 // doverà essere una funzione PURA che prenderà lo STATO CORRENTE dall'applicazione nel momento in cui viene "risvegliato" (eseguito dopo una dispatch)
 // e prenderà anche una ACTION che gli verrà inviata attraverso la dispatch dal nostro componente o UI
 
+import { ADD_TO_FAVORITE, REMOVE_FROM_FAVORITE } from "../actions";
+
 // a questo punto con STATO CORRENTE e ACTION genererà il NUOVO STATO GLOBALE, il nuovo stato del nostro Store.
 
 // OGNI VOLTA che verrà risvegliato avrà bisogno di leggere dalla nostra action il suo TYPE (per questo è obbligatorio) e un'eventuale PAYLOAD
@@ -10,7 +12,6 @@
 
 const initialState = {
   favorite: {
-    heart: false,
     content: [], // iniziamo con un array vuoto perché content riceverà un array dal nostro reducer
   },
 };
@@ -32,15 +33,7 @@ const mainReducer = (state = initialState, action) => {
   // ci proteggiamo dall'eventualità che il nuovo valore di stato diventi undefined, conseguentemente rompendo il flusso di Redux!
 
   switch (action.type) {
-    case "HEART":
-      return {
-        ...state,
-        favorite: {
-          ...state.favorite,
-          heart: action.payload,
-        },
-      };
-    case "ADD_TO_FAVORITE":
+    case ADD_TO_FAVORITE:
       return {
         ...state,
         favorite: {
@@ -48,7 +41,7 @@ const mainReducer = (state = initialState, action) => {
           content: [...state.favorite.content, action.payload],
         },
       };
-    case "REMOVE_FROM_FAVORITE":
+    case REMOVE_FROM_FAVORITE:
       return {
         ...state,
         favorite: {

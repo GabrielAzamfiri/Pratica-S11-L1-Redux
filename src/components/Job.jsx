@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { HeartFill } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import {  addToFavoriteAction } from "../redux/actions";
 
 const Job = ({ data }) => {
   const [favorite, setFavorite] = useState(false);
@@ -31,10 +32,7 @@ const Job = ({ data }) => {
           <HeartFill
             onClick={() => {
               setFavorite(!favorite),
-                dispatch({
-                  type: "ADD_TO_FAVORITE",
-                  payload: data,
-                });
+                dispatch(addToFavoriteAction(data));
             }}
             fill={favorite ? "red" : "lightgrey"}
           />
