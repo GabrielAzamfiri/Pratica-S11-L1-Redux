@@ -1,16 +1,14 @@
-import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { HeartFill } from "react-bootstrap-icons";
-import { useDispatch } from "react-redux";
+import { Heart, HeartFill } from "react-bootstrap-icons";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {  addToFavoriteAction } from "../redux/actions";
+import { addToFavoriteAction } from "../redux/actions";
 
 const Job = ({ data }) => {
-  const [favorite, setFavorite] = useState(false);
-
   // questa variabile la potremo chiamare per attivare il processo di SCRITTURA nello Store
   const dispatch = useDispatch();
-
+  const favorite = useSelector(state => state.addRemoveFavorite.content);
+  const isInFavorite = favorite.some(job => job._id === data._id);
   //  // useSelector ci chiede una funzione per selezionare una porzione di stato, quello che ritorna la funzione sarà il dato trovato in quel valore di stato,
   // // che verrà prelevato e assegnato alla variabile associata
   // const favorite = useSelector(state => state.favorite.content);
@@ -26,17 +24,18 @@ const Job = ({ data }) => {
         </a>
       </Col>
       <Col xs={1}>
-       
-        
-        
+        {isInFavorite ? (
           <HeartFill
-            onClick={() => {
-              setFavorite(!favorite),
-                dispatch(addToFavoriteAction(data));
-            }}
-            fill={favorite ? "red" : "lightgrey"}
+            
+            fill="red"
           />
-        
+        ) : (
+          <Heart
+            onClick={() => {
+              dispatch(addToFavoriteAction(data));
+            }}
+          />
+        )}
       </Col>
     </Row>
   );
