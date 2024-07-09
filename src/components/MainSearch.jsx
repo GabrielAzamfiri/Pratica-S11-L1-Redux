@@ -53,7 +53,7 @@ const MainSearch = () => {
       <Col xs={10} className="mx-auto mb-5">
 
         {isLoading ? 
-        ( <Spinner animatino="border" className="mt-3" variant="primary" />) : 
+        ( <Spinner animation="border" className="mt-3" variant="primary" />) : 
         (jobs.map(jobData => (
           <Job key={jobData._id} data={jobData} />
         )))
